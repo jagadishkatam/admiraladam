@@ -1,3 +1,4 @@
+# nolint: quotes_linter, commas_linter
 # Name: ADADAS
 #
 # Label: ADAS-Cog Analysis Dataset
@@ -24,6 +25,7 @@ adsl <- haven::read_xpt("adam/adsl.xpt")
 # character values from SAS appear as "" characters in R, instead of appearing
 # as NA values. Further details can be obtained via the following link:
 # https://pharmaverse.github.io/admiral/articles/admiral.html#handling-of-missing-values
+
 
 sdtms <- c('dm','ds','ex','ae','lb','suppdm','suppds','sv','vs','qs','sc','suppae')
 

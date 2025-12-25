@@ -1,10 +1,6 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
-
 on:
   push:
     branches: [main, master]
@@ -31,4 +27,38 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: R CMD check (fail on warnings)
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          error-on: '"warning"'
+          args: 'c("--no-manual", "--as-cran")'
+
+      - name: Lint package
+        run: |
+          install.packages("lintr")
+          lintr::lint_package()
+        shell: Rscript {0}
+
+      - name: Validate package assets
+        run: |
+          # Ensure inst/ exists
+          if (!dir.exists("inst")) {
+            stop("inst/ directory is missing")
+          }
+
+          # Disallow non-portable filenames
+          bad_files <- list.files(
+            "inst",
+            recursive = TRUE,
+            pattern = "[()[:space:]]"
+          )
+
+          if (length(bad_files) > 0) {
+            stop(
+              "Non-portable filenames detected:\n",
+              paste(bad_files, collapse = "\n")
+            )
+          }
+        shell: Rscript {0}
+
+

@@ -1,0 +1,52 @@
+linters: lintr::linters_with_defaults(
+
+  # -------------------------------
+  # READABILITY (ADaM/SDTM-friendly)
+  # -------------------------------
+
+  # ADaM variable names and derivations are long by nature
+  # 120 chars is a good industry compromise
+  line_length_linter = NULL,
+
+  # Allow snake_case, UPPER_CASE, and CDISC-style names
+  object_name_linter = NULL,
+
+  # Clinical code often uses intentionally unused variables
+  # during staged derivations
+  object_usage_linter = NULL,
+
+  # -------------------------------
+  # FALSE-POSITIVE-PRONE LINTERS
+  # -------------------------------
+
+  # NSE-heavy code (dplyr, admiral, tidy eval) confuses this
+  nonportable_path_linter = NULL,
+
+  # Often flags valid clinical expressions and metadata logic
+  infix_spaces_linter = NULL,
+
+  # Can misfire on CDISC constants and labels
+  object_length_linter = NULL,
+
+  # -------------------------------
+  # KEEP THESE (HIGH SIGNAL)
+  # -------------------------------
+
+  # Syntax errors should always fail
+  parse_error_linter = lintr::parse_error_linter(),
+
+  # Missing commas, unmatched brackets, etc.
+  syntax_error_linter = lintr::syntax_error_linter(),
+
+  # Catch accidental assignment in conditions
+  assignment_linter = lintr::assignment_linter(),
+
+  # Catch duplicated arguments (common copy/paste bug)
+  duplicated_argument_linter = lintr::duplicated_argument_linter(),
+
+  # Discourage use of attach()
+  attach_linter = lintr::attach_linter(),
+
+  # Prevent :: misuse
+  namespace_linter = lintr::namespace_linter()
+)

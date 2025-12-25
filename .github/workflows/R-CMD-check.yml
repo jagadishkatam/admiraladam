@@ -35,6 +35,7 @@ jobs:
 
       - name: Lint package
         run: |
+          install.packages("lintr")
           lintr::lint_package()
         shell: Rscript {0}
 

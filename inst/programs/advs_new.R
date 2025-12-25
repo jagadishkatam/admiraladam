@@ -196,8 +196,20 @@ advs %>%
   xportr_write("~/admiraladam/adam/advs_new.xpt")
 
 
+base <- haven::read_xpt('~/admiraladam/adam/advs.xpt')
+compare <- haven::read_xpt('~/admiraladam/adam/advs_new.xpt')
 
 
-
-
-
+diffdf(
+  base,
+  compare,
+  keys = NULL,
+  suppress_warnings = FALSE,
+  strict_numeric = TRUE,
+  strict_factor = TRUE,
+  file = NULL,
+  tolerance = sqrt(.Machine$double.eps),
+  scale = NULL,
+  check_column_order = FALSE,
+  check_df_class = FALSE
+)
